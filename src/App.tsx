@@ -24,7 +24,7 @@ import Navbar from './components/Navbar';
 import Home from './pages';
 import Roadmap from './pages/roadmap';
 import Team from './pages/team';
-
+import Footer from './components/Footer';
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 const NavItems = [
@@ -78,14 +78,8 @@ export default function App() {
                 <Route path="/Home" element={<Home/>}/>
                 <Route path="/Roadmap" element={<Roadmap/>}/>
                 <Route path="/Team" element={<Team/>}/>
-                {/*NavItems.map((route: any) => (
-                  <Route 
-                    key={route.path} 
-                    path={route.path} 
-                    element={route.component}
-                  />
-                ))*/}
               </Routes>
+              <Footer/>
             </WalletModalProvider>
           </WalletProvider>
       </ConnectionProvider>

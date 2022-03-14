@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {AppBar, Button, Box, Grid, Toolbar, Typography, Tabs, Tab, useTheme, useMediaQuery} from "@mui/material"
+import {AppBar, Box, Grid, Toolbar, Typography, Tabs, Tab, useTheme, useMediaQuery} from "@mui/material"
 import DrawerComp from "../Drawer";
 import {Link} from "react-router-dom";
 import ConnectWallet from "./connectWallet";
