@@ -5,7 +5,7 @@ const s = require('./index.css');
 export const Footer = () => {
 return (
         <section className="color__section">
-            <ul>
+            <ul className='column'>
                 <li><a href="#"><i><FaTwitter /></i></a></li>
                 <li><a href="#"><i><FaDiscord /></i></a></li>
             </ul>

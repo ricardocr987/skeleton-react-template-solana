@@ -17,7 +17,7 @@ export const DrawerComp = ({NavItems}: NavProps) => {
                 }} 
                 open={open} 
                 onClose={() => setOpen(false)}>
-                <List>
+                <List >
                     {NavItems.map((route: any) =>
                         <ListItemButton onClick={()=>setOpen(false)} key={route.path} divider>
                             <ListItemIcon>

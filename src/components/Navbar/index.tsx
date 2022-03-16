@@ -3,6 +3,7 @@ import {AppBar, Box, Grid, Toolbar, Typography, Tabs, Tab, useTheme, useMediaQue
 import DrawerComp from "../Drawer";
 import {Link} from "react-router-dom";
 import ConnectWallet from "./connectWallet";
+
 interface NavProps{
     NavItems: any;
 }
