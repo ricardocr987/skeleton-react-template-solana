@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ConnectionProvider,
   WalletProvider,
@@ -25,8 +25,9 @@ import Home from './pages';
 import Roadmap from './pages/roadmap';
 import Team from './pages/team';
 import Footer from './components/Footer';
+import ClipLoader from "react-spinners/ClipLoader";
 require('@solana/wallet-adapter-react-ui/styles.css');
-
+const s = require('./App.css');
 const NavItems = [
   {
       path: '/',
@@ -47,42 +48,61 @@ const NavItems = [
 
 
 export default function App() {
-    // Can be set to 'devnet', 'testnet', or 'mainnet-beta'
-    const network = WalletAdapterNetwork.Mainnet;
+  // Can be set to 'devnet', 'testnet', or 'mainnet-beta'
+  const network = WalletAdapterNetwork.Mainnet;
 
-    // You can also provide a custom RPC endpoint
-    const endpoint = React.useMemo(() => clusterApiUrl(network), [network]);
-  
-    // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking --
-    // Only the wallets you configure here will be compiled into your application
-    const wallets = React.useMemo(
-      () => [
-          new PhantomWalletAdapter(),
-          new SlopeWalletAdapter(),
-          new SolflareWalletAdapter({ network }),
-          new TorusWalletAdapter(),
-          new LedgerWalletAdapter(),
-          new SolletWalletAdapter({ network }),
-          new SolletExtensionWalletAdapter({ network }),
-      ],
-      [network]
-    );
+  // You can also provide a custom RPC endpoint
+  const endpoint = React.useMemo(() => clusterApiUrl(network), [network]);
+
+  // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking --
+  // Only the wallets you configure here will be compiled into your application
+  const wallets = React.useMemo(
+    () => [
+        new PhantomWalletAdapter(),
+        new SlopeWalletAdapter(),
+        new SolflareWalletAdapter({ network }),
+        new TorusWalletAdapter(),
+        new LedgerWalletAdapter(),
+        new SolletWalletAdapter({ network }),
+        new SolletExtensionWalletAdapter({ network }),
+    ],
+    [network]
+  );
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2500)
+  }, []);
+
   return (
     <>
-      <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets} autoConnect>
-            <WalletModalProvider>
-              <Navbar NavItems={NavItems}/>
-              <Routes>          
-                <Route path="/" element={<Home/>}/>
-                <Route path="/Home" element={<Home/>}/>
-                <Route path="/Roadmap" element={<Roadmap/>}/>
-                <Route path="/Team" element={<Team/>}/>
-              </Routes>
-              <Footer/>
-            </WalletModalProvider>
-          </WalletProvider>
-      </ConnectionProvider>
+      {
+        loading ?
+          <div className='Loader'>
+            <ClipLoader
+              size={100}
+              color={"#EF66EB"}
+              loading={loading}
+            />
+          </div>
+        :
+          <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider wallets={wallets} autoConnect>
+              <WalletModalProvider>
+                <Navbar NavItems={NavItems}/>
+                <Routes>          
+                  <Route path="/" element={<Home/>}/>
+                  <Route path="/Home" element={<Home/>}/>
+                  <Route path="/Roadmap" element={<Roadmap/>}/>
+                  <Route path="/Team" element={<Team/>}/>
+                </Routes>
+                <Footer/>
+              </WalletModalProvider>
+            </WalletProvider>
+          </ConnectionProvider>
+      }
     </>
   );
 }
